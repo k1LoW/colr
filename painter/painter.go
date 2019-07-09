@@ -12,21 +12,13 @@ import (
 	"github.com/labstack/gommon/color"
 )
 
-type Painter struct {
-	ctx      context.Context
-	replaces []string
-	regexps  []*regexp.Regexp
-}
-
 type colorFunc func(interface{}, ...string) string
 
-var colorFuncs = []colorFunc{
-	color.Red,
-	color.Yellow,
-	color.Magenta,
-	color.Green,
-	color.Cyan,
-	color.Blue,
+type Painter struct {
+	ctx        context.Context
+	replaces   []string
+	regexps    []*regexp.Regexp
+	colorFuncs []colorFunc
 }
 
 // NewPainter ...
@@ -40,17 +32,39 @@ func NewPainter(ctx context.Context, strs []string) *Painter {
 			regexps = append(regexps, regexp.MustCompile("("+s+")"))
 		}
 	}
+	c := color.New()
+	c.Enable()
 	return &Painter{
 		ctx:      ctx,
 		replaces: replaces,
 		regexps:  regexps,
+		colorFuncs: []colorFunc{
+			func(msg interface{}, styles ...string) string {
+				return c.Red(msg, styles...)
+			},
+			func(msg interface{}, styles ...string) string {
+				return c.Cyan(msg, styles...)
+			},
+			func(msg interface{}, styles ...string) string {
+				return c.Yellow(msg, styles...)
+			},
+			func(msg interface{}, styles ...string) string {
+				return c.Magenta(msg, styles...)
+			},
+			func(msg interface{}, styles ...string) string {
+				return c.Green(msg, styles...)
+			},
+			func(msg interface{}, styles ...string) string {
+				return c.Blue(msg, styles...)
+			},
+		},
 	}
 }
 
 func (p *Painter) AddColor(inn io.Reader) <-chan string {
 	in := bufio.NewReader(inn)
 	out := make(chan string)
-	fLen := len(colorFuncs)
+	fLen := len(p.colorFuncs)
 	rLen := len(p.replaces)
 
 	go func() {
@@ -64,10 +78,10 @@ func (p *Painter) AddColor(inn io.Reader) <-chan string {
 				os.Exit(1)
 			}
 			for i, r := range p.replaces {
-				s = strings.ReplaceAll(s, r, colorFuncs[i%fLen](r, color.B))
+				s = strings.ReplaceAll(s, r, p.colorFuncs[i%fLen](r, color.B))
 			}
 			for i, re := range p.regexps {
-				s = re.ReplaceAllString(s, colorFuncs[(i+rLen)%fLen]("$1", color.B))
+				s = re.ReplaceAllString(s, p.colorFuncs[(i+rLen)%fLen]("$1", color.B))
 			}
 			select {
 			case <-p.ctx.Done():
