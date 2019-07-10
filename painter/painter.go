@@ -16,6 +16,7 @@ type colorFunc func(interface{}, ...string) string
 
 type Painter struct {
 	ctx        context.Context
+	out        chan string
 	replaces   []string
 	regexps    []*regexp.Regexp
 	colorFuncs []colorFunc
@@ -36,6 +37,7 @@ func NewPainter(ctx context.Context, strs []string) *Painter {
 	c.Enable()
 	return &Painter{
 		ctx:      ctx,
+		out:      make(chan string),
 		replaces: replaces,
 		regexps:  regexps,
 		colorFuncs: []colorFunc{
@@ -63,7 +65,6 @@ func NewPainter(ctx context.Context, strs []string) *Painter {
 
 func (p *Painter) AddColor(inn io.Reader) <-chan string {
 	in := bufio.NewReader(inn)
-	out := make(chan string)
 	fLen := len(p.colorFuncs)
 	rLen := len(p.replaces)
 
@@ -87,10 +88,10 @@ func (p *Painter) AddColor(inn io.Reader) <-chan string {
 			case <-p.ctx.Done():
 				break L
 			default:
-				out <- s
+				p.out <- s
 			}
 		}
 	}()
 
-	return out
+	return p.out
 }
