@@ -2,6 +2,8 @@
 
 `colr` colors strings, colorfully.
 
+![screencast](doc/screencast.svg)
+
 ## Usage
 
 ``` console
