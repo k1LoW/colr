@@ -57,9 +57,9 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
-		p := painter.NewPainter(ctx, args)
+		p := painter.NewPainter(args)
 
-		for o := range p.AddColor(os.Stdin) {
+		for o := range p.AddColor(ctx, os.Stdin) {
 			fmt.Printf("%s", o)
 		}
 	},
