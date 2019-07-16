@@ -3,8 +3,13 @@ before:
     - go mod download
     - go mod tidy
 builds:
-- env:
-  - CGO_ENABLED=0
+-
+  env:
+    - CGO_ENABLED=0
+  goos:
+    - darwin
+    - linux
+    - windows
   ldflags:
     - -s -w -X github.com/k1LoW/colr.version={{.Version}} -X github.com/k1LoW/colr.commit={{.FullCommit}} -X github.com/k1LoW/colr.date={{.Date}} -X github.com/k1LoW/colr/version.Version={{.Version}}
 archives:
@@ -24,7 +29,8 @@ snapshot:
   name_template: "{{ .Version }}-next"
 changelog:
   skip: true
-brew:
+brews:
+-
   name: colr
   github:
     owner: k1LoW
