@@ -29,8 +29,9 @@ import (
 
 	"github.com/k1LoW/colr/painter"
 	"github.com/k1LoW/colr/version"
+	"github.com/mattn/go-colorable"
+	"github.com/mattn/go-isatty"
 	"github.com/spf13/cobra"
-	"golang.org/x/crypto/ssh/terminal"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -49,7 +50,7 @@ var rootCmd = &cobra.Command{
 			os.Exit(0)
 		}
 
-		if terminal.IsTerminal(0) {
+		if isatty.IsTerminal(os.Stdin.Fd()) {
 			return errors.New("colr need STDIN. Please use pipe")
 		}
 		return nil
@@ -59,8 +60,9 @@ var rootCmd = &cobra.Command{
 		defer cancel()
 		p := painter.NewPainter(args)
 
+		out := colorable.NewColorableStdout()
 		for o := range p.AddColor(ctx, os.Stdin) {
-			fmt.Printf("%s", o)
+			fmt.Fprintf(out, "%s", o)
 		}
 	},
 }

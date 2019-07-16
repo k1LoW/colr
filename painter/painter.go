@@ -67,6 +67,7 @@ func (p *Painter) AddColor(ctx context.Context, inn io.Reader) <-chan string {
 	rLen := len(p.replaces)
 
 	go func() {
+		defer close(p.out)
 	L:
 		for {
 			s, err := in.ReadString('\n')
