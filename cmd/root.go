@@ -29,6 +29,7 @@ import (
 
 	"github.com/k1LoW/colr/painter"
 	"github.com/k1LoW/colr/version"
+	"github.com/mattn/go-colorable"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ssh/terminal"
 )
@@ -59,8 +60,9 @@ var rootCmd = &cobra.Command{
 		defer cancel()
 		p := painter.NewPainter(args)
 
+		out := colorable.NewColorableStdout()
 		for o := range p.AddColor(ctx, os.Stdin) {
-			fmt.Printf("%s", o)
+			fmt.Fprintf(out, "%s", o)
 		}
 	},
 }
