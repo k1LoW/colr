@@ -4,11 +4,19 @@ before:
     - go mod tidy
 builds:
 -
+  id: colr-linux
+  env:
+    - CGO_ENABLED=0
+  goos:
+    - linux
+  ldflags:
+    - -s -w -X github.com/k1LoW/colr.version={{.Version}} -X github.com/k1LoW/colr.commit={{.FullCommit}} -X github.com/k1LoW/colr.date={{.Date}} -X github.com/k1LoW/colr/version.Version={{.Version}}
+-
+  id: colr-darwin-windows
   env:
     - CGO_ENABLED=0
   goos:
     - darwin
-    - linux
     - windows
   ldflags:
     - -s -w -X github.com/k1LoW/colr.version={{.Version}} -X github.com/k1LoW/colr.commit={{.FullCommit}} -X github.com/k1LoW/colr.date={{.Date}} -X github.com/k1LoW/colr/version.Version={{.Version}}
@@ -41,3 +49,18 @@ brews:
   homepage: https://github.com/k1LoW/colr
   description: 'colr colors strings, colorfully.'
   install: bin.install 'colr'
+nfpms:
+  -
+    id: colr-nfpms
+    name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
+    builds:
+    - colr-linux
+    homepage: https://github.com/k1LoW/colr
+    maintainer: Ken'ichiro Oyama <k1lowxb@gmail.com>
+    description: colr colors strings, colorfully.
+    license: MIT
+    formats:
+      - deb
+      - rpm
+    bindir: /usr/bin
+    epoch: 1
