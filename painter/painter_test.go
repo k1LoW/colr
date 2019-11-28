@@ -14,6 +14,7 @@ func TestPaint(t *testing.T) {
 		{[]string{"Hello"}, "Hello", "\x1b[31;1mHello\x1b[0m"},
 		{[]string{"He"}, "Hello", "\x1b[31;1mHe\x1b[0mllo"},
 		{[]string{"l"}, "Hello", "He\x1b[31;1ml\x1b[0m\x1b[31;1ml\x1b[0mo"},
+		{[]string{"He", "lo"}, "Hello", "\x1b[31;1mHe\x1b[0ml\x1b[36;1mlo\x1b[0m"},
 	}
 
 	for _, tt := range tests {
