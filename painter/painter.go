@@ -26,7 +26,7 @@ func NewPainter(strs []string) *Painter {
 	replaces := []string{}
 	regexps := []*regexp.Regexp{}
 	for _, s := range strs {
-		if strings.IndexAny(s, ".*[(^-?") < 0 {
+		if !strings.ContainsAny(s, ".*[(^-?") {
 			replaces = append(replaces, s)
 		} else {
 			regexps = append(regexps, regexp.MustCompile("("+s+")"))

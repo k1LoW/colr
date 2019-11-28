@@ -27,12 +27,15 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/k1LoW/colr/eraser"
 	"github.com/k1LoW/colr/painter"
 	"github.com/k1LoW/colr/version"
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-isatty"
 	"github.com/spf13/cobra"
 )
+
+var erase bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -58,11 +61,19 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
-		p := painter.NewPainter(args)
 
-		out := colorable.NewColorableStdout()
-		for o := range p.AddColor(ctx, os.Stdin) {
-			fmt.Fprintf(out, "%s", o)
+		if erase {
+			e := eraser.NewEraser()
+			for o := range e.EraseColor(ctx, os.Stdin) {
+				fmt.Fprintf(os.Stdout, "%s", o)
+			}
+		} else {
+			p := painter.NewPainter(args)
+
+			out := colorable.NewColorableStdout()
+			for o := range p.AddColor(ctx, os.Stdin) {
+				fmt.Fprintf(out, "%s", o)
+			}
 		}
 	},
 }
@@ -76,4 +87,5 @@ func Execute() {
 
 func init() {
 	rootCmd.Flags().BoolP("version", "v", false, "print the version")
+	rootCmd.Flags().BoolVarP(&erase, "erase", "", false, "erase colors from STDIN")
 }
