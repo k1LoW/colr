@@ -1,4 +1,4 @@
-# colr [![Build Status](https://travis-ci.org/k1LoW/colr.svg?branch=master)](https://travis-ci.org/k1LoW/colr) [![GitHub release](https://img.shields.io/github/release/k1LoW/colr.svg)](https://github.com/k1LoW/colr/releases)
+# colr [![Build Status](https://github.com/k1LoW/colr/workflows/build/badge.svg)](https://github.com/k1LoW/colr/actions) [![GitHub release](https://img.shields.io/github/release/k1LoW/colr.svg)](https://github.com/k1LoW/colr/releases)
 
 `colr` colors strings, colorfully.
 
