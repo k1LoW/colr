@@ -52,7 +52,7 @@ brews:
 nfpms:
   -
     id: colr-nfpms
-    name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
+    file_name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
     builds:
     - colr-linux
     homepage: https://github.com/k1LoW/colr
