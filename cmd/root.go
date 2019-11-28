@@ -64,14 +64,13 @@ var rootCmd = &cobra.Command{
 
 		if erase {
 			e := eraser.NewEraser()
-			for o := range e.EraseColor(ctx, os.Stdin) {
+			for o := range e.Handle(ctx, os.Stdin) {
 				fmt.Fprintf(os.Stdout, "%s", o)
 			}
 		} else {
 			p := painter.NewPainter(args)
-
 			out := colorable.NewColorableStdout()
-			for o := range p.AddColor(ctx, os.Stdin) {
+			for o := range p.Handle(ctx, os.Stdin) {
 				fmt.Fprintf(out, "%s", o)
 			}
 		}

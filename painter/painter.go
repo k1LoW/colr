@@ -61,11 +61,20 @@ func NewPainter(strs []string) *Painter {
 	}
 }
 
-func (p *Painter) AddColor(ctx context.Context, inn io.Reader) <-chan string {
-	in := bufio.NewReader(inn)
+func (p *Painter) Paint(s string) string {
 	fLen := len(p.colorFuncs)
 	rLen := len(p.replaces)
+	for i, r := range p.replaces {
+		s = strings.ReplaceAll(s, r, p.colorFuncs[i%fLen](r, color.B))
+	}
+	for i, re := range p.regexps {
+		s = re.ReplaceAllString(s, p.colorFuncs[(i+rLen)%fLen]("$1", color.B))
+	}
+	return s
+}
 
+func (p *Painter) Handle(ctx context.Context, inn io.Reader) <-chan string {
+	in := bufio.NewReader(inn)
 	go func() {
 		defer close(p.out)
 	L:
@@ -77,17 +86,11 @@ func (p *Painter) AddColor(ctx context.Context, inn io.Reader) <-chan string {
 				_, _ = fmt.Fprintf(os.Stderr, "%s\n", err)
 				os.Exit(1)
 			}
-			for i, r := range p.replaces {
-				s = strings.ReplaceAll(s, r, p.colorFuncs[i%fLen](r, color.B))
-			}
-			for i, re := range p.regexps {
-				s = re.ReplaceAllString(s, p.colorFuncs[(i+rLen)%fLen]("$1", color.B))
-			}
 			select {
 			case <-ctx.Done():
 				break L
 			default:
-				p.out <- s
+				p.out <- p.Paint(s)
 			}
 		}
 	}()

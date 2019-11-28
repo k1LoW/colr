@@ -20,7 +20,11 @@ func NewEraser() *Eraser {
 	}
 }
 
-func (e *Eraser) EraseColor(ctx context.Context, inn io.Reader) <-chan string {
+func (e *Eraser) Erase(s string) string {
+	return stripansi.Strip(s)
+}
+
+func (e *Eraser) Handle(ctx context.Context, inn io.Reader) <-chan string {
 	in := bufio.NewReader(inn)
 
 	go func() {
@@ -34,12 +38,11 @@ func (e *Eraser) EraseColor(ctx context.Context, inn io.Reader) <-chan string {
 				_, _ = fmt.Fprintf(os.Stderr, "%s\n", err)
 				os.Exit(1)
 			}
-			s = stripansi.Strip(s)
 			select {
 			case <-ctx.Done():
 				break L
 			default:
-				e.out <- s
+				e.out <- e.Erase(s)
 			}
 		}
 	}()
