@@ -87,5 +87,5 @@ func Execute() {
 
 func init() {
 	rootCmd.Flags().BoolP("version", "v", false, "print the version")
-	rootCmd.Flags().BoolVarP(&erase, "erase", "", false, "erase colors from STDIN")
+	rootCmd.Flags().BoolVarP(&erase, "erase", "e", false, "erase colors from STDIN")
 }
