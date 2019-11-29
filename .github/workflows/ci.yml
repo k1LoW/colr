@@ -17,6 +17,7 @@ jobs:
           go-version: ${{ matrix.go_version }}
 
       - name: Install codecov
+        if: matrix.platform == 'ubuntu-latest'
         run: sudo pip install codecov
 
       - name: Check out source code
@@ -28,6 +29,7 @@ jobs:
           GOPROXY: "https://proxy.golang.org"
 
       - name: Run codecov
+        if: matrix.platform == 'ubuntu-latest'
         run: codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
