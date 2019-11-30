@@ -10,6 +10,8 @@
 $ tail -F /var/log/nginx/access.log | colr POST GET 404 500 search
 ```
 
+**Erase colors:**
+
 If you want to erase colors from STDIN, you can use `--erase` option.
 
 ``` console
