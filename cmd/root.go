@@ -63,9 +63,11 @@ var rootCmd = &cobra.Command{
 		defer cancel()
 
 		if erase {
-			e := eraser.NewEraser()
-			for o := range e.Handle(ctx, os.Stdin) {
-				fmt.Fprintf(os.Stdout, "%s", o)
+			e := eraser.NewEraser(os.Stdout)
+			err := e.Handle(ctx, os.Stdin)
+			if err != nil {
+				_, _ = fmt.Fprintf(os.Stderr, "%s\n", err)
+				os.Exit(1)
 			}
 		} else {
 			p := painter.NewPainter(args)
