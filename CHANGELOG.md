@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.0.0](https://github.com/k1LoW/colr/compare/v0.4.0...v1.0.0) (2019-11-30)
+
+* Refactor code [#6](https://github.com/k1LoW/colr/pull/6) ([k1LoW](https://github.com/k1LoW))
+
 ## [v0.4.0](https://github.com/k1LoW/colr/compare/v0.3.0...v0.4.0) (2019-11-29)
 
 * Use GitHub Actions [#5](https://github.com/k1LoW/colr/pull/5) ([k1LoW](https://github.com/k1LoW))
