@@ -5,10 +5,11 @@ on: push
 jobs:
   job-test:
     name: Test
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         go_version: [1.12, 1.13]
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
     steps:
       - name: Set up Go ${{ matrix.go_version }}
         uses: actions/setup-go@v1
@@ -16,6 +17,7 @@ jobs:
           go-version: ${{ matrix.go_version }}
 
       - name: Install codecov
+        if: matrix.platform == 'ubuntu-latest'
         run: sudo pip install codecov
 
       - name: Check out source code
@@ -23,10 +25,22 @@ jobs:
 
       - name: Test
         run: env PATH=`go env GOPATH`/bin:$PATH make ci
+        if: matrix.platform != 'windows-latest'
         env:
           GOPROXY: "https://proxy.golang.org"
 
+      - name: Test
+        run: |
+          go test ./...
+          go test ./... -tags integration
+        shell: cmd
+        if: matrix.platform == 'windows-latest'
+        env:
+          GO111MODULE: on
+          GOPROXY: "https://proxy.golang.org"
+
       - name: Run codecov
+        if: matrix.platform == 'ubuntu-latest'
         run: codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
