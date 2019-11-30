@@ -30,7 +30,9 @@ jobs:
           GOPROXY: "https://proxy.golang.org"
 
       - name: Test
-        run: go test ./...
+        run: |
+          go test ./...
+          go test ./... -tags integration
         shell: cmd
         if: matrix.platform == 'windows-latest'
         env:

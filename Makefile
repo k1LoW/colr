@@ -13,10 +13,13 @@ BUILD_LDFLAGS = -X $(PKG).commit=$(COMMIT) -X $(PKG).date=$(DATE)
 
 default: test
 
-ci: depsdev test sec
+ci: depsdev test test_integration sec
 
 test:
 	go test ./... -coverprofile=coverage.txt -covermode=count
+
+test_integration: build
+	go test ./... -tags integration
 
 sec:
 	gosec ./...
