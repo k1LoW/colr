@@ -22,10 +22,10 @@ func TestPaintAndErase(t *testing.T) {
 		err  error
 	)
 	if runtime.GOOS == "windows" {
-		got, err = exec.Command("cmd", "/c", `echo Hello| .\colr.exe He | .\colr.exe --erase`).Output()
+		got, err = exec.Command("cmd", "/c", `echo Hello| .\colr.exe He lo xx | .\colr.exe --erase`).Output()
 		want = "Hello\r\n"
 	} else {
-		got, err = exec.Command("bash", "-c", `echo Hello| ./colr He | ./colr --erase`).Output()
+		got, err = exec.Command("bash", "-c", `echo Hello| ./colr He lo xx | ./colr --erase`).Output()
 		want = "Hello\n"
 	}
 	if err != nil {
