@@ -25,7 +25,15 @@ jobs:
 
       - name: Test
         run: env PATH=`go env GOPATH`/bin:$PATH make ci
+        if: matrix.platform != 'windows-latest'
         env:
+          GOPROXY: "https://proxy.golang.org"
+
+      - name: Test
+        run: go test ./...
+        if: matrix.platform == 'windows-latest'
+        env:
+          GO111MODULE: on
           GOPROXY: "https://proxy.golang.org"
 
       - name: Run codecov
