@@ -36,6 +36,8 @@ depsdev:
 	go get github.com/securego/gosec/cmd/gosec
 
 prerelease:
+	git pull origin main --tag
+	go mod tidy
 	ghch -w -N ${VER}
 	gocredits . > CREDITS
 	git add CHANGELOG.md CREDITS
@@ -43,6 +45,7 @@ prerelease:
 	git tag ${VER}
 
 release:
+	git push origin main --tag
 	goreleaser --rm-dist
 
 .PHONY: default test
