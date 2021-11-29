@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.1.0](https://github.com/k1LoW/colr/compare/v1.0.0...v1.1.0) (2021-11-30)
+
+* Update package and Go [#7](https://github.com/k1LoW/colr/pull/7) ([k1LoW](https://github.com/k1LoW))
+
 ## [v1.0.0](https://github.com/k1LoW/colr/compare/v0.4.0...v1.0.0) (2019-11-30)
 
 * Refactor code [#6](https://github.com/k1LoW/colr/pull/6) ([k1LoW](https://github.com/k1LoW))
