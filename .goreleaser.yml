@@ -38,17 +38,21 @@ snapshot:
 changelog:
   skip: true
 brews:
--
-  name: colr
-  github:
-    owner: k1LoW
-    name: homebrew-tap
-  commit_author:
-    name: k1LoW
-    email: k1lowxb@gmail.com
-  homepage: https://github.com/k1LoW/colr
-  description: 'colr colors strings, colorfully.'
-  install: bin.install 'colr'
+  -
+    name: colr
+    ids:
+      - colr-archive
+    tap:
+      owner: k1LoW
+      name: homebrew-tap
+    commit_author:
+      name: k1LoW
+      email: k1lowxb@gmail.com
+    homepage: https://github.com/k1LoW/colr
+    description: colr colors strings, colorfully.
+    license: MIT
+    install: |
+      bin.install 'colr'
 nfpms:
   -
     id: colr-nfpms
@@ -60,6 +64,7 @@ nfpms:
     description: colr colors strings, colorfully.
     license: MIT
     formats:
+      - apk
       - deb
       - rpm
     bindir: /usr/bin
