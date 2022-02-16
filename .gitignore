@@ -1,4 +1,4 @@
 .go-version
 dist/
 colr
-coverage.txt
+coverage.out

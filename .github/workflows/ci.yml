@@ -39,3 +39,7 @@ jobs:
         run: codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Run octocov
+        if: matrix.platform == 'ubuntu-latest'
+        uses: k1LoW/octocov-action@v0

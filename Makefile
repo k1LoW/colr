@@ -16,7 +16,7 @@ default: test
 ci: depsdev test test_integration sec
 
 test:
-	go test ./... -coverprofile=coverage.txt -covermode=count
+	go test ./... -coverprofile=coverage.out -covermode=count
 
 test_integration: build
 	go test ./... -tags integration
