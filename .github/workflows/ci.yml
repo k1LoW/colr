@@ -20,10 +20,6 @@ jobs:
         with:
           go-version: ${{ matrix.go_version }}
 
-      - name: Install codecov
-        if: matrix.platform == 'ubuntu-latest'
-        run: sudo pip install codecov
-
       - name: Check out source code
         uses: actions/checkout@v2
 
@@ -37,12 +33,6 @@ jobs:
           go test ./... -tags integration
         shell: cmd
         if: matrix.platform == 'windows-latest'
-
-      - name: Run codecov
-        if: matrix.platform == 'ubuntu-latest'
-        run: codecov
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Run octocov
         if: matrix.platform == 'ubuntu-latest'
