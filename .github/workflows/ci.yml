@@ -22,16 +22,20 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Test
-        run: make ci
-        if: matrix.platform != 'windows-latest'
+      - name: Run lint
+        if: matrix.platform == 'ubuntu-latest'
+        uses: reviewdog/action-golangci-lint@v2
 
       - name: Test
+        if: matrix.platform != 'windows-latest'
+        run: make ci
+
+      - name: Test
+        if: matrix.platform == 'windows-latest'
         run: |
           go test ./...
           go test ./... -tags integration
         shell: cmd
-        if: matrix.platform == 'windows-latest'
 
       - name: Run octocov
         if: matrix.platform == 'ubuntu-latest'
