@@ -22,11 +22,10 @@ $ any-colorful-command | colr --erase
 
 **deb:**
 
-Use [dpkg-i-from-url](https://github.com/k1LoW/dpkg-i-from-url)
-
 ``` console
 $ export COLR_VERSION=X.X.X
-$ curl -L https://git.io/dpkg-i-from-url | bash -s -- https://github.com/k1LoW/colr/releases/download/v$COLR_VERSION/colr_$COLR_VERSION-1_amd64.deb
+$ curl -o colr.deb -L https://github.com/k1LoW/colr/releases/download/v$COLR_VERSION/colr_$COLR_VERSION-1_amd64.deb
+$ dpkg -i colr.deb
 ```
 
 **RPM:**
@@ -38,11 +37,10 @@ $ yum install https://github.com/k1LoW/colr/releases/download/v$COLR_VERSION/col
 
 **apk:**
 
-Use [apk-add-from-url](https://github.com/k1LoW/apk-add-from-url)
-
 ``` console
 $ export COLR_VERSION=X.X.X
-$ curl -L https://git.io/apk-add-from-url | sh -s -- https://github.com/k1LoW/colr/releases/download/v$COLR_VERSION/colr_$COLR_VERSION-1_amd64.apk
+$ curl -o colr.apk -L https://github.com/k1LoW/colr/releases/download/v$COLR_VERSION/colr_$COLR_VERSION-1_amd64.apk
+$ apk add colr.apk
 ```
 
 **homebrew tap:**
