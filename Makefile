@@ -13,7 +13,7 @@ BUILD_LDFLAGS = -X $(PKG).commit=$(COMMIT) -X $(PKG).date=$(DATE)
 
 default: test
 
-ci: depsdev test test_integration sec
+ci: depsdev test test_integration
 
 test:
 	go test ./... -coverprofile=coverage.out -covermode=count
@@ -21,8 +21,8 @@ test:
 test_integration: build
 	go test ./... -tags integration
 
-sec:
-	gosec ./...
+lint:
+	golangci-lint run ./...
 
 build:
 	go build -ldflags="$(BUILD_LDFLAGS)"
