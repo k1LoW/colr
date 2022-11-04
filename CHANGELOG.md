@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.1.1](https://github.com/k1LoW/colr/compare/v1.1.0...v1.1.1) (2022-11-04)
+
+* Bump up go and pkgs version [#10](https://github.com/k1LoW/colr/pull/10) ([k1LoW](https://github.com/k1LoW))
+* Add arm64 [#9](https://github.com/k1LoW/colr/pull/9) ([k1LoW](https://github.com/k1LoW))
+* Use octocov [#8](https://github.com/k1LoW/colr/pull/8) ([k1LoW](https://github.com/k1LoW))
+
 ## [v1.1.0](https://github.com/k1LoW/colr/compare/v1.0.0...v1.1.0) (2021-11-30)
 
 * Update package and Go [#7](https://github.com/k1LoW/colr/pull/7) ([k1LoW](https://github.com/k1LoW))
