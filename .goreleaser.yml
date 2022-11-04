@@ -9,6 +9,9 @@ builds:
     - CGO_ENABLED=0
   goos:
     - linux
+  goarch:
+    - amd64
+    - arm64
   ldflags:
     - -s -w -X github.com/k1LoW/colr.version={{.Version}} -X github.com/k1LoW/colr.commit={{.FullCommit}} -X github.com/k1LoW/colr.date={{.Date}} -X github.com/k1LoW/colr/version.Version={{.Version}}
 -
@@ -18,6 +21,9 @@ builds:
   goos:
     - darwin
     - windows
+  goarch:
+    - amd64
+    - arm64
   ldflags:
     - -s -w -X github.com/k1LoW/colr.version={{.Version}} -X github.com/k1LoW/colr.commit={{.FullCommit}} -X github.com/k1LoW/colr.date={{.Date}} -X github.com/k1LoW/colr/version.Version={{.Version}}
 archives:
